@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Finch MSO — Lawyers should practice law. Leave the rest to Finch.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#002147;
+    --navy-2:#001734;
+    --charcoal:#333333;
+    --silver:#A9A9A9;
+    --paper:#F6F5F1;
+    --line:#E6E4DE;
+    --ink:#1a1a1a;
+    --accent:#0a3a73;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#fff;color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .container{max-width:1240px;margin:0 auto;padding:0 32px}
+  .display{font-family:'Fraunces',Georgia,serif;font-weight:400;letter-spacing:-0.02em;line-height:1.05}
+  .eyebrow{font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--silver);font-weight:500}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:2px;font-weight:500;font-size:14px;letter-spacing:0.02em;transition:all .2s}
+  .btn-primary{background:var(--navy);color:#fff;border:1px solid var(--navy)}
+  .btn-primary:hover{background:var(--navy-2)}
+  .btn-ghost{border:1px solid rgba(255,255,255,0.4);color:#fff}
+  .btn-ghost:hover{background:rgba(255,255,255,0.08)}
+  .btn-dark{background:#fff;color:var(--navy);border:1px solid #fff}
+  .btn-outline-dark{border:1px solid var(--navy);color:var(--navy)}
+  .btn-outline-dark:hover{background:var(--navy);color:#fff}
+  .arrow{display:inline-block;transition:transform .2s}
+  .btn:hover .arrow{transform:translateX(4px)}
+
+  /* ============ NAV ============ */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.96);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:80px}
+  .logo{display:flex;align-items:center}
+  .logo img,.logo svg{height:54px;width:auto;display:block}
+  nav ul{display:flex;gap:36px;list-style:none}
+  nav a{font-size:14px;font-weight:500;color:var(--charcoal)}
+  nav a:hover{color:var(--navy)}
+  .nav-cta{display:flex;gap:12px;align-items:center}
+
+  /* ============ HERO ============ */
+  .hero{position:relative;padding:24px 0 140px;background:linear-gradient(180deg,#fff 0%,var(--paper) 100%);overflow:hidden}
+  .hero::before{content:"";position:absolute;right:-100px;top:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,33,71,0.04) 0%,transparent 70%)}
+  .hero-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:60px;align-items:center;position:relative}
+  .hero h1{font-size:clamp(44px,5.4vw,76px);color:var(--navy);margin:24px 0 28px}
+  .hero h1 em{font-style:italic;color:var(--charcoal);font-weight:300}
+  .hero p.lede{font-size:19px;color:#4a4a4a;max-width:560px;margin-bottom:40px}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-card{background:#fff;border:1px solid var(--line);padding:32px;box-shadow:0 30px 60px -30px rgba(0,33,71,0.18)}
+  .hero-card .num{font-family:'Fraunces',serif;font-size:64px;color:var(--navy);line-height:1}
+  .hero-card .lbl{margin-top:12px;color:var(--charcoal);font-size:15px;font-weight:500}
+  .hero-card .sub{margin-top:6px;color:var(--silver);font-size:13px}
+  .hero-card hr{margin:24px 0;border:0;border-top:1px solid var(--line)}
+  .hero-card .row{display:flex;justify-content:space-between;font-size:13px;color:var(--charcoal);margin:8px 0}
+  .hero-card .row b{color:var(--navy);font-weight:600}
+
+  /* ============ LOGO STRIP ============ */
+  .logos{padding:56px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}
+  .logos .container{display:flex;align-items:center;gap:32px;justify-content:space-between;flex-wrap:wrap}
+  .logos .label{font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--silver);font-weight:500;flex:0 0 100%;text-align:center;margin-bottom:22px}
+  .logos .item{flex:1;display:flex;align-items:center;justify-content:center;min-width:140px;height:56px}
+  .logos .item img{height:36px;width:auto;max-width:180px;object-fit:contain;filter:brightness(0) opacity(0.72);transition:all .25s ease}
+  .logos .item:hover img{filter:brightness(0) opacity(1)}
+
+  /* ============ TEAM ============ */
+  .team{padding:120px 0;background:#fff}
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-top:24px}
+  .team-card{text-align:left}
+  .team-card .photo-wrap{position:relative;aspect-ratio:1/1;background:linear-gradient(160deg,#f0eee8 0%,#e6e2d6 100%);overflow:hidden;margin-bottom:24px}
+  .team-card .photo-wrap::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 110%,rgba(0,33,71,0.12) 0%,transparent 60%);z-index:1;pointer-events:none}
+  .team-card .photo-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:0}
+  .team-card:not(.ceo) .photo-wrap img{inset:auto;left:50%;top:12%;transform:translateX(-50%);width:auto;height:auto;max-width:78%;max-height:80%;object-fit:contain;object-position:top center}
+  .team-card h4{font-family:'Fraunces',serif;font-size:24px;font-weight:500;color:var(--navy);margin-bottom:4px;line-height:1.15}
+  .team-card .role{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--silver);margin-bottom:14px;font-weight:500}
+  .team-card p{font-size:13.5px;color:#555;line-height:1.6}
+
+  /* ============ DILEMMA ============ */
+  .section{padding:120px 0}
+  .section-head{max-width:780px;margin-bottom:64px}
+  .section-head h2{font-size:clamp(34px,3.6vw,52px);color:var(--navy);margin:16px 0 20px}
+  .section-head p{font-size:18px;color:#555}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .grid-4 > div{background:#fff;padding:36px 28px;min-height:260px;display:flex;flex-direction:column;justify-content:space-between}
+  .grid-4 .num{font-family:'Fraunces',serif;font-size:34px;color:var(--silver);font-weight:300}
+  .grid-4 h3{font-size:18px;color:var(--navy);margin:auto 0 12px;font-weight:600}
+  .grid-4 p{font-size:14px;color:#555;line-height:1.6}
+
+  /* ============ SOLUTION DARK ============ */
+  .dark{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+  .dark::before{content:"";position:absolute;left:-200px;bottom:-200px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.04) 0%,transparent 70%)}
+  .dark .section-head h2{color:#fff}
+  .dark .section-head p{color:#b8c4d4}
+  .dark .eyebrow{color:#7a8ba3}
+  .dark-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;position:relative}
+  .dark-grid .item{padding-top:32px;border-top:2px solid rgba(255,255,255,0.18)}
+  .dark-grid .item h3{font-family:'Fraunces',serif;font-size:26px;font-weight:400;margin-bottom:14px;color:#fff}
+  .dark-grid .item p{font-size:14px;color:#b8c4d4;line-height:1.65}
+  /* Light-mode override when .dark-grid appears outside a .dark section */
+  .section:not(.dark) .dark-grid .item{border-top:2px solid var(--navy)}
+  .section:not(.dark) .dark-grid .item h3{color:var(--navy)}
+  .section:not(.dark) .dark-grid .item p{color:#555}
+  /* Dark-mode override when .grid-4 appears inside a .dark section */
+  .dark .grid-4{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.12)}
+  .dark .grid-4 > div{background:var(--navy)}
+  .dark .grid-4 .num{color:rgba(255,255,255,0.35)}
+  .dark .grid-4 h3{color:#fff}
+  .dark .grid-4 p{color:#b8c4d4}
+
+  /* ============ STATS ============ */
+  .stats{padding:100px 0;background:var(--paper)}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:48px}
+  .stats .stat{border-left:2px solid var(--navy);padding:8px 0 8px 24px}
+  .stats .num{font-family:'Fraunces',serif;font-size:60px;color:var(--navy);line-height:1;letter-spacing:-0.02em}
+  .stats .lbl{margin-top:14px;font-size:14px;color:var(--charcoal);max-width:200px;line-height:1.5}
+
+  /* ============ MODEL / SPLIT ============ */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  .split .visual{aspect-ratio:5/4;background:linear-gradient(135deg,var(--navy) 0%,#003875 100%);position:relative;overflow:hidden}
+  .split .visual::after{content:"FINCH";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Fraunces',serif;font-size:140px;color:rgba(255,255,255,0.06);letter-spacing:0.02em;font-weight:300}
+  .split .visual .pill{position:absolute;left:32px;top:32px;border:1px solid rgba(255,255,255,0.3);padding:8px 14px;font-size:11px;color:#fff;letter-spacing:0.18em;text-transform:uppercase}
+  .split .visual .quote{position:absolute;left:32px;right:32px;bottom:32px;color:#fff;font-family:'Fraunces',serif;font-size:24px;line-height:1.3;font-weight:300}
+  .split h2{font-size:44px;color:var(--navy);margin:16px 0 24px}
+  .split ul{list-style:none;margin:32px 0}
+  .split li{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--charcoal)}
+  .split li b{color:var(--navy);min-width:120px;display:inline-block}
+
+  /* ============ TIMELINE ============ */
+  .timeline{padding:120px 0;background:#fff}
+  .timeline-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:48px;position:relative}
+  .timeline-grid::before{content:"";position:absolute;top:36px;left:5%;right:5%;height:1px;background:var(--line)}
+  .timeline-step{padding:0 24px;text-align:center;position:relative}
+  .timeline-step .dot{width:18px;height:18px;border-radius:50%;background:var(--navy);margin:28px auto;border:4px solid #fff;box-shadow:0 0 0 1px var(--navy);position:relative;z-index:1}
+  .timeline-step .when{font-family:'Fraunces',serif;font-size:32px;color:var(--navy);margin-bottom:8px}
+  .timeline-step h4{font-size:16px;color:var(--charcoal);margin:14px 0 12px;font-weight:600}
+  .timeline-step ul{list-style:none;text-align:left;max-width:280px;margin:0 auto}
+  .timeline-step li{font-size:13px;color:#555;padding:6px 0;padding-left:18px;position:relative;line-height:1.5}
+  .timeline-step li::before{content:"›";position:absolute;left:0;color:var(--navy);font-weight:600}
+
+  /* ============ TESTIMONIAL ============ */
+  .testimonial{background:var(--paper);padding:120px 0}
+  .testimonial blockquote{font-family:'Fraunces',serif;font-size:42px;line-height:1.25;color:var(--navy);font-weight:300;max-width:1000px;letter-spacing:-0.01em}
+  .testimonial cite{display:block;margin-top:40px;font-style:normal;font-size:14px;color:var(--charcoal);letter-spacing:0.04em}
+  .testimonial cite b{display:block;color:var(--navy);font-size:16px;margin-bottom:4px}
+
+  /* ============ CTA BAND ============ */
+  .cta-band{background:var(--navy);color:#fff;padding:60px 0 100px;text-align:center}
+  .cta-band h2{font-family:'Fraunces',serif;font-size:clamp(36px,4vw,58px);font-weight:300;line-height:1.15;max-width:900px;margin:0 auto 32px}
+  .cta-band h2 em{font-style:italic;color:#9bb3d4}
+  .cta-band p{color:#b8c4d4;font-size:17px;max-width:560px;margin:0 auto 40px}
+
+  /* ============ FOOTER ============ */
+  footer{background:var(--navy-2);color:#9bb3d4;padding:80px 0 32px;font-size:14px}
+  .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;padding-bottom:60px;border-bottom:1px solid rgba(255,255,255,0.08)}
+  footer .brand{font-family:'Fraunces',serif;font-size:28px;color:#fff;margin-bottom:16px}
+  footer .brand small{display:block;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:0.2em;color:#7a8ba3;margin-top:8px;text-transform:uppercase}
+  footer p{max-width:340px;line-height:1.6;color:#9bb3d4}
+  footer h5{color:#fff;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:18px;font-weight:600}
+  footer ul{list-style:none}
+  footer li{padding:6px 0}
+  footer a:hover{color:#fff}
+  .foot-bottom{display:flex;justify-content:space-between;padding-top:32px;font-size:12px;color:#6b7d96}
+
+  @media (max-width: 960px){
+    .hero-grid,.split,.dark-grid,.grid-4,.stats-grid,.timeline-grid,.foot-grid,.team-grid{grid-template-columns:1fr;gap:32px}
+    .timeline-grid::before{display:none}
+    .section,.team{padding:80px 0}
+    .hero{padding:80px 0}
+    nav ul{display:none}
+    .logos .container{gap:24px}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      <img src="assets/logos/Finch%20Logo.png" alt="Finch MSO" />
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#top">Approach</a></li>
+        <li><a href="#partners">Partners</a></li>
+        <li><a href="#insights">Insights</a></li>
+        <li><a href="#services">What We Do</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-outline-dark">Partner with Finch <span class="arrow">→</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">For local & regional law firms</span>
+      <h1>Big Law resources.<br/><em>Local firm independence.</em></h1>
+      <p class="lede">Finch is your comprehensive back office support partner, enabling you to prioritize billable hours, grow your practice, and maintain a technical edge — without selling your firm or ceding professional control.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary">Schedule a confidential call <span class="arrow">→</span></a>
+        <a href="#approach" class="btn btn-outline-dark">How it works</a>
+      </div>
+    </div>
+    <aside class="hero-card">
+      <span class="eyebrow">Practice Affiliation Fee</span>
+      <div class="num">30–50%</div>
+      <div class="lbl">of your firm's gross revenue, in your pocket at signing</div>
+      <div class="sub">Access liquidity without losing control.</div>
+      <hr/>
+      <div class="row"><span>Practice Affiliation Fee</span><b>Day 1</b></div>
+      <div class="row"><span>Blackacre Legal Marketing</span><b>Week 1</b></div>
+      <div class="row"><span>Back Office Integration</span><b>Month 1</b></div>
+      <div class="row"><span>Full Network Scale Benefits</span><b>Year 1</b></div>
+    </aside>
+  </div>
+</section>
+
+<!-- LOGO STRIP -->
+<section class="logos" id="partners">
+  <div class="container">
+    <div class="label">Backed by, partnered with, and powered through</div>
+    <div class="item"><img src="assets/logos/Krieg%20Logo.png" alt="Krieg Management" /></div>
+    <div class="item"><img src="assets/logos/GCP%20Logo.png" alt="Gerchen Capital Partners" /></div>
+    <div class="item"><img src="assets/logos/KP%20Logo.svg" alt="Keller Postman" /></div>
+    <div class="item"><img src="assets/logos/Blackacre%20Logo.avif" alt="Blackacre" style="height:72px" /></div>
+    <div class="item"><img src="assets/logos/Atticor%20Logo.png" alt="Atticor" /></div>
+  </div>
+</section>
+
+<!-- DILEMMA -->
+<section class="section dark" id="insights" style="padding-top:24px;padding-bottom:96px">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:51px">
+      <span class="eyebrow">The Partner's Dilemma</span>
+      <h2>You built the practice. The hard part shouldn't be everything else.</h2>
+      <p>Most general practice partners we speak with share the same four concerns. Finch was built to answer all of them.</p>
+    </div>
+    <div class="grid-4">
+      <div>
+        <span class="num">01</span>
+        <div>
+          <h3>The Marketing Gap</h3>
+          <p>Bigger firms outspend you 5–10× on intake. You lose cases before the call ever comes in.</p>
+        </div>
+      </div>
+      <div>
+        <span class="num">02</span>
+        <div>
+          <h3>Operational Burden</h3>
+          <p>No pricing leverage with vendors, and fewer attorneys to distribute costs across.</p>
+        </div>
+      </div>
+      <div>
+        <span class="num">03</span>
+        <div>
+          <h3>Expansion Risks</h3>
+          <p>Expansion means growing your back office as much as it means increasing your case load.</p>
+        </div>
+      </div>
+      <div>
+        <span class="num">04</span>
+        <div>
+          <h3>The Equity Trap</h3>
+          <p>Years of value locked inside the firm — with no path to liquidity short of selling.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION LIGHT -->
+<section class="section" id="services" style="padding-top:24px;padding-bottom:96px">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">What Finch Delivers</span>
+      <h2>Four answers. One partnership.</h2>
+      <p>A comprehensive back office and growth platform — built around the firm you already run.</p>
+    </div>
+    <div class="dark-grid">
+      <div class="item"><h3>Client Acquisition</h3><p>Day 1 custom marketing support from Blackacre — Big Law legal marketing and client intake at your fingertips.</p></div>
+      <div class="item"><h3>Operational Support</h3><p>Group rate procurement with vendors and MSO network benefits, driving down your firm's overhead costs by 15–40%.</p></div>
+      <div class="item"><h3>Growth Partnership</h3><p>Your back office scales with your case load automatically — you focus on billable hours, and we handle everything else.</p></div>
+      <div class="item"><h3>Your Independence</h3><p>30–50% of annual revenue in cash, at closing — professional control, client relationships, and the firm's identity stay with you.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band" id="contact">
+  <div class="container">
+    <span class="eyebrow" style="color:#7a8ba3">Get in touch</span>
+    <h2 style="margin-top:18px">Lawyers should practice law. <em>Leave the rest to Finch.</em></h2>
+    <p>A confidential 30-minute call is the only commitment. We'll walk through your firm, your goals, and whether a Finch partnership makes sense.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="mailto:cogan@kriegmanagement.com" class="btn btn-dark">Schedule a call <span class="arrow">→</span></a>
+      <a href="#" class="btn btn-ghost">Download the overview</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <img src="assets/logos/Finch%20Logo.png" alt="Finch MSO" style="height:54px;width:auto;display:block;margin-bottom:24px;filter:brightness(0) invert(1)" />
+        <p>A management services organization for local and regional law firms. A portfolio company of Krieg Management, backed by Gerchen Capital Partners.</p>
+      </div>
+      <div>
+        <h5>Platform</h5>
+        <ul>
+          <li><a href="#services">Client Acquisition</a></li>
+          <li><a href="#services">Operational Support</a></li>
+          <li><a href="#services">Growth Partnership</a></li>
+          <li><a href="#services">Your Independence</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Partners</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:partner@finchmso.com">partner@finchmso.com</a></li>
+          <li><a href="#">Schedule a call</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2026 Finch MSO (dba of Krieg Holdings I, LLC). All rights reserved.</div>
+      <div><a href="#">Legal</a> · <a href="#">Privacy</a> · <a href="#">Disclosures</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
