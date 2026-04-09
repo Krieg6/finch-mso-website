@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200">
-  <text x="300" y="118" font-family="'Fraunces',Georgia,serif" font-size="92" font-weight="400" text-anchor="middle" letter-spacing="-1">
-    <tspan fill="#333333">Finch</tspan><tspan fill="#002147" font-style="italic"> mso</tspan>
-  </text>
-  <line x1="190" y1="142" x2="410" y2="142" stroke="#002147" stroke-width="1"/>
-  <text x="300" y="162" font-family="'Inter',sans-serif" font-size="10" font-weight="500" text-anchor="middle" letter-spacing="5" fill="#A9A9A9">
-    MANAGEMENT SERVICES ORGANIZATION
-  </text>
-</svg>
