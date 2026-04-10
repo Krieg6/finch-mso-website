@@ -181,6 +181,31 @@
 </head>
 <body>
 
+<!-- PASSWORD WALL -->
+<div id="pw-wall" style="position:fixed;inset:0;z-index:9999;background:#002147;display:flex;align-items:center;justify-content:center;flex-direction:column;font-family:'Inter',system-ui,sans-serif">
+  <div style="text-align:center;max-width:380px;padding:0 24px">
+    <img src="assets/logos/Finch%20Logo%202.png" alt="Finch MSO" style="height:60px;margin:0 auto 48px" />
+    <p style="color:#7a8ba3;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:24px">Internal Review</p>
+    <input id="pw-input" type="password" placeholder="Enter password" autofocus
+      style="width:100%;padding:14px 18px;font-size:16px;font-family:inherit;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff;border-radius:4px;outline:none;text-align:center;letter-spacing:0.08em" />
+    <button id="pw-btn" onclick="checkPw()"
+      style="margin-top:16px;width:100%;padding:14px;font-size:14px;font-family:inherit;font-weight:600;background:#fff;color:#002147;border:none;border-radius:4px;cursor:pointer;letter-spacing:0.02em">Enter</button>
+    <p id="pw-err" style="color:#e85454;font-size:13px;margin-top:14px;opacity:0;transition:opacity .2s">Incorrect password</p>
+  </div>
+</div>
+<script>
+  document.getElementById('pw-input').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw()});
+  function checkPw(){
+    if(document.getElementById('pw-input').value==='Finch4'){
+      document.getElementById('pw-wall').style.display='none';
+    }else{
+      document.getElementById('pw-err').style.opacity='1';
+      document.getElementById('pw-input').value='';
+      setTimeout(function(){document.getElementById('pw-err').style.opacity='0'},2000);
+    }
+  }
+</script>
+
 <header class="nav">
   <div class="container nav-inner">
     <a href="#" class="logo">
