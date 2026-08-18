@@ -174,6 +174,25 @@
   .faq-note a{color:var(--silver);text-decoration:underline;text-underline-offset:2px}
   .faq-note a:hover{color:var(--navy)}
 
+  /* ============ INTRO CURTAIN ============ */
+  #curtain{position:fixed;inset:0;z-index:9999;background:var(--navy);display:flex;
+    align-items:center;justify-content:center;text-align:center;padding:0 32px;
+    opacity:1;transition:opacity .85s ease}
+  #curtain::before{content:"";position:absolute;left:-200px;bottom:-200px;width:700px;height:700px;
+    border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.05) 0%,transparent 70%)}
+  #curtain .curtain-inner{position:relative;max-width:900px}
+  #curtain h2{font-family:'Fraunces',Georgia,serif;font-size:clamp(32px,4.6vw,60px);font-weight:300;
+    line-height:1.16;color:#fff;letter-spacing:-0.01em;
+    opacity:0;transform:translateY(14px);animation:curtainIn .9s ease .18s forwards}
+  #curtain h2 em{font-style:italic;color:#9bb3d4}
+  @keyframes curtainIn{to{opacity:1;transform:translateY(0)}}
+  #curtain.done{opacity:0;pointer-events:none}
+  html.curtain-active,html.curtain-active body{overflow:hidden}
+  @media (prefers-reduced-motion:reduce){
+    #curtain h2{animation:none;opacity:1;transform:none}
+    #curtain{transition:opacity .3s linear}
+  }
+
   /* ============ CTA BAND ============ */
   .cta-band{background:var(--navy);color:#fff;padding:60px 0 100px;text-align:center}
   .cta-band h2{font-family:'Fraunces',serif;font-size:clamp(36px,4vw,58px);font-weight:300;line-height:1.15;max-width:900px;margin:0 auto 32px}
@@ -217,8 +236,44 @@
     .logos .container{gap:24px}
   }
 </style>
+<script>document.documentElement.className+=' curtain-active';</script>
 </head>
 <body>
+
+<!-- INTRO CURTAIN -->
+<div id="curtain" role="presentation" aria-hidden="true">
+  <div class="curtain-inner">
+    <h2>Lawyers should practice law. <em>Leave the rest to Finch.</em></h2>
+  </div>
+</div>
+<script>
+(function(){
+  var HOLD = 3500;   // ms the curtain stays fully visible
+  var FADE = 850;    // must match the CSS transition duration
+
+  var el   = document.getElementById('curtain');
+  var root = document.documentElement;
+  var done = false;
+
+  function dismiss(){
+    if(done) return;
+    done = true;
+    el.classList.add('done');
+    root.classList.remove('curtain-active');
+    setTimeout(function(){ if(el && el.parentNode) el.parentNode.removeChild(el); }, FADE + 60);
+  }
+
+  var timer = setTimeout(dismiss, HOLD);
+
+  // let an impatient visitor skip it
+  ['click','keydown','wheel','touchstart'].forEach(function(evt){
+    window.addEventListener(evt, function(){ clearTimeout(timer); dismiss(); }, {once:true, passive:true});
+  });
+
+  // safety net: never trap the page if something goes wrong
+  setTimeout(dismiss, 6000);
+})();
+</script>
 
 <header class="nav">
   <div class="container nav-inner">
@@ -330,8 +385,8 @@
       </details>
 
       <details class="qa">
-        <summary>Is Finch buying my law firm?</summary>
-        <div class="a"><p>No. Your firm remains a separate, attorney-owned entity. What Finch acquires is the administrative and business infrastructure — the vendor contracts, the systems, the back office functions — along with the right to service your practice going forward. You are not selling your practice, your client list, or your license.</p></div>
+        <summary>I continue to own my law firm?</summary>
+        <div class="a"><p>Yes, entirely. Your firm remains a separate, attorney-owned entity. What Finch acquires is the administrative and business infrastructure — the vendor contracts, the systems, the back office functions — along with the right to service your practice going forward. You are not selling your practice, your client list, or your license.</p></div>
       </details>
 
       <details class="qa">
@@ -345,17 +400,17 @@
 
       <details class="qa">
         <summary>Who decides which cases we take and how we handle them?</summary>
-        <div class="a"><p>You do, entirely. Case selection, legal strategy, staffing decisions on individual matters, settlement posture, and every other exercise of professional judgment stay with the firm's attorneys. Finch does not practice law, does not employ attorneys to practice law, and has no voice in the substance of your work.</p></div>
+        <div class="a"><p>You do, without exception. Case selection, legal strategy, staffing decisions on individual matters, settlement posture, and every other exercise of professional judgment stay with the firm's attorneys. Finch does not practice law, does not employ attorneys to practice law, and has no voice in the substance of your work.</p></div>
       </details>
 
       <details class="qa">
         <summary>What changes for our attorneys and staff?</summary>
-        <div class="a"><p>Attorneys stay with the firm. Administrative and support personnel typically transition to Finch, which usually means access to better benefits and a real HR function. Day to day, they keep doing the same work with the same people, in the same location. The main change most firms notice is that hiring, payroll, and benefits administration stop being your problem.</p></div>
+        <div class="a"><p>Your attorneys and personnel stay with your firm. Non-attorney staff will transition to Finch for payroll and access to better benefits and a real HR function — but their tasking remains your prerogative. Day to day, your team does the same work with the same people, in the same location. The main change is that the associated administrative tasks stop being your problem.</p></div>
       </details>
 
       <details class="qa">
         <summary>How are duration and exit provisions handled?</summary>
-        <div class="a"><p>Every services agreement sets out defined terms for duration, performance expectations, and the mechanics available to either side. As a rule, we walk through those provisions line by line early in diligence — not because we expect to use them, but because our alignment is fundamental to the relationship.</p><p>We are building long-term, trust-based partnerships. We are straightforward about every aspect of how the MSO structure works: the economics, the governance, the obligations on both sides, and the exit terms. We do not consider an agreement ready to sign until every provision has been walked through with all parties.</p></div>
+        <div class="a"><p>We are building long-term, trust-based partnerships, and are direct about every aspect of our structure. You retain the right to terminate the relationship subject to customary notice and cure provisions — we focus on delivering value so the thought never crosses your mind. We walk through the specifics of the services agreement early in diligence, and can provide a sample term sheet upon request.</p></div>
       </details>
     </div>
 
@@ -368,18 +423,18 @@
       </details>
 
       <details class="qa">
-        <summary>Do all of the partners have to participate?</summary>
-        <div class="a"><p>Yes. Finch becomes your firm's back office in full, which means the commitment runs both ways and across the entire ownership group. We are taking on the operational infrastructure of the whole practice, not a portion of it, and that only works when every partner is aligned behind the same arrangement.</p><p>Partners naturally arrive at the conversation from different places — one may be years from retirement while another is early in their career — and the structure accounts for those differences in how proceeds are allocated across the ownership group. What it does not accommodate is partial participation. Before anything moves forward, we want the entire partnership at the table and comfortable with the decision.</p></div>
+        <summary>Do all partners participate?</summary>
+        <div class="a"><p>Yes. We are taking on the operational infrastructure of the whole practice, not a portion of it, and that only works when every partner is aligned. We are joining your team to enable growth, administrative and back-office excellence, and your continued delivery of the best client experience possible. Before anything moves forward, we need all partners oriented on the same ultimate goal.</p></div>
       </details>
 
       <details class="qa">
         <summary>How will the Practice Affiliation Fee be taxed?</summary>
-        <div class="a"><p>The Practice Affiliation Fee is structured to be taxed at long-term capital gains rates rather than as ordinary income. You are transferring the business assets and administrative infrastructure of the practice, not earning additional fee income, so the proceeds are treated as the sale of a capital asset. At current federal rates, that distinction is a meaningful difference in what you actually keep.</p><p>The precise structure depends on your firm's entity type, ownership makeup, and jurisdiction, and we walk through those mechanics in depth during our initial conversations. We work alongside your CPA throughout the process and encourage you to have your own tax advisor confirm the treatment for your specific circumstances.</p></div>
+        <div class="a"><p>We have structured the Practice Affiliation Fee to be as efficient for our partners as possible — taxed at long-term capital gains rates rather than ordinary income. At current federal rates, that distinction is a meaningful difference in what you actually keep.</p><p>The precise structure depends on your firm's entity type, ownership makeup, and jurisdiction, and we walk through those mechanics in depth during our initial conversations. We work alongside your CPA throughout the process and encourage you to have your own tax advisor confirm the treatment for your specific circumstances.</p></div>
       </details>
 
       <details class="qa">
-        <summary>Does Finch set or cap attorney compensation?</summary>
-        <div class="a"><p>No. Attorney base compensation is agreed to before the start of each fiscal year through direct, frank conversation between the firm's partners and Finch leadership. It is not capped, and it is not set unilaterally.</p><p>Some MSOs position their upfront payment as a predictable advance against unpredictable future profit distributions. We do not structure it that way. Keeping incentives aligned between the firm's partners and Finch is our highest priority — we are working toward the same outcome you are: a larger, more efficient, more profitable practice. The upside belongs to the attorneys who generate it, and you hold more of it than we do.</p></div>
+        <summary>Does attorney compensation stay protected under the MSO?</summary>
+        <div class="a"><p>Yes. Attorney base compensation is agreed to before the start of each fiscal year through direct, frank conversation between the firm's partners and Finch leadership. It is not capped, and it is not set unilaterally.</p><p>Some MSOs position their upfront payment as a predictable advance against unpredictable future profit distributions. We do not structure it that way. Keeping incentives aligned between the firm's partners and Finch is our highest priority — we are working toward the same outcome you are: a larger, more efficient, more profitable practice. The upside belongs to the attorneys who generate it, and you hold more of it than we do.</p></div>
       </details>
     </div>
 
@@ -392,8 +447,8 @@
       </details>
 
       <details class="qa">
-        <summary>Do we have to tell our clients?</summary>
-        <div class="a"><p>Your engagement with clients does not change — same firm, same attorneys, same representation. Whether any disclosure is required depends on your jurisdiction's rules and the particulars of your arrangement. This is a question worth resolving with your ethics counsel before closing rather than after.</p></div>
+        <summary>How is the partnership communicated to clients?</summary>
+        <div class="a"><p>Your engagement with clients does not change — same firm, same attorneys, same representation. Finch does not communicate with your clients and holds no authority over case selection, legal strategy, or work product. Back-office arrangements rarely trigger disclosure obligations, though requirements vary by jurisdiction — we confirm the position with local ethics counsel before closing.</p></div>
       </details>
 
       <details class="qa">
@@ -406,18 +461,18 @@
       <h3>Process and timing</h3>
 
       <details class="qa">
-        <summary>How long does this take?</summary>
-        <div class="a"><p>From an initial conversation to closing is typically 90 days. The sequence runs through an introductory call, an indication of terms, financial and operational diligence, and then definitive documentation. The pace depends mostly on how quickly your firm can provide diligence materials and how many decision-makers need to reach agreement.</p></div>
+        <summary>How long does it take to affiliate?</summary>
+        <div class="a"><p>Initial conversation to closing typically spans 90–120 days. The sequence runs through an introductory call, an indication of terms, financial and operational diligence, and then definitive documentation. The pace depends mostly on how quickly we can access diligence materials and how many decision-makers need to reach agreement. We understand the importance of time in the legal profession, and make every effort to be as efficient with yours as possible.</p></div>
       </details>
 
       <details class="qa">
-        <summary>What does Finch actually take over first?</summary>
+        <summary>What's the integration process following affiliation?</summary>
         <div class="a"><p>Marketing and intake support come online early, because that is where firms feel the gap most acutely. Vendor consolidation and procurement savings follow. Deeper back office integration — billing systems, technology, reporting — happens over the first several months rather than all at once. Our sequencing revolves around a commitment to never disrupt the work or operations of your practice. We implement the most value-additive functions first, and save the longer-horizon infrastructure work for last.</p></div>
       </details>
 
       <details class="qa">
         <summary>What should we have ready before a first conversation?</summary>
-        <div class="a"><p>Nothing. A first call is a conversation about your practice, your goals, and how our structure can best support you — it is not a diligence exercise. Items that are helpful include two or three years of rough financials, a sense of your revenue mix by practice area, and your firm's current back-office and administrative framework.</p></div>
+        <div class="a"><p>Nothing to prepare. The first call is a conversation, not a diligence exercise — we walk through your practice, where you want to take it, and whether we are the right partner to get you there. The firms that get the most from these conversations tend to share a few things: they want to grow, they want to serve their clients and their people better, and they want their attorneys spending time on law rather than logistics. If that sounds like your firm, the rest is our job.</p></div>
       </details>
     </div>
 
